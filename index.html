@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO Meta Tags -->
+  <title>Doce Mel — Sorveteria Artesanal | Sabores que Encantam</title>
+  <meta name="description"
+    content="Descubra os sorvetes artesanais da Doce Mel. Casquinhas, sundaes, milkshakes e muito mais. Feitos com ingredientes selecionados e muito carinho." />
+  <meta name="keywords" content="sorveteria, sorvete artesanal, doce mel, casquinha, sundae, milkshake, picolé" />
+  <meta name="author" content="Doce Mel Sorveteria" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Doce Mel — Sorveteria Artesanal" />
+  <meta property="og:description" content="Sorvetes artesanais feitos com amor. Conheça nosso cardápio!" />
+  <meta property="og:type" content="website" />
+
+  <!-- Favicon -->
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍦</text></svg>" />
+
+  <!-- Folha de estilos -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- ========================================================
+       HEADER — Branco puro, nav em texto simples, CTA destacado
+       ======================================================== -->
+  <header class="header" id="header">
+    <div class="header__container">
+      <!-- Logo vermelho bold -->
+      <a href="index.html" class="header__logo" id="logo">
+        <span class="header__logo-icon">
+          <img src="images/Logo.png" alt="Logo oficial" class="header__logo-image" />
+        </span>
+        Doce Mel
+      </a>
+
+      <!-- Nav + Carrinho -->
+      <div class="header__right">
+        <nav class="header__nav" id="main-nav" aria-label="Navegação principal">
+          <a href="index.html" class="header__nav-link header__nav-link--active" id="nav-vitrine">
+            Vitrine
+          </a>
+          <a href="como-fiz.html" class="header__nav-link" id="nav-como-fiz">
+            Como Fiz
+          </a>
+        </nav>
+
+        <!-- Botão do carrinho como principal CTA (Estilo Outline) -->
+        <button class="cart-btn" id="cart-btn" aria-label="Abrir carrinho de compras">
+          <span class="cart-btn__icon">🛒</span>
+          <span>Carrinho</span>
+          <span class="cart-btn__badge" id="cart-badge">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ========================================================
+         HERO — Split Layout, Título todo vermelho, Foco no Produto
+         ======================================================== -->
+    <section class="hero" id="hero">
+      <div class="hero__content">
+        <div class="hero__badge">
+          ⭐ Artesanal & Natural
+        </div>
+
+        <!-- Título principal totalmente vermelho (Contraste alto) -->
+        <h1 class="hero__titulo">
+          Sabores que derretem o coração
+        </h1>
+
+        <p class="hero__subtitulo">
+          Sorvetes artesanais feitos com ingredientes selecionados,
+          muito carinho e aquele toque especial da Doce Mel.
+        </p>
+        
+        <!-- BUSCA movida para a Hero Section (à esquerda) -->
+        <div class="busca__wrapper">
+          <span class="busca__icone" aria-hidden="true">🔍</span>
+          <input
+            type="text"
+            id="search-input"
+            class="busca__input"
+            placeholder="Buscar por nome ou categoria..."
+            aria-label="Buscar produtos por nome ou categoria"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+      
+      <!-- Área visual da direita (PNG Transparente de Alta Qualidade) -->
+      <div class="hero__image-container">
+        <img 
+          src="images/casquinhaBase.jpg" 
+          alt="Casquinha de sorvete de morango apetitosa" 
+          class="hero__image"
+        />
+      </div>
+    </section>
+
+    <!-- ========================================================
+         PRODUTOS — Grid dinâmico (JS injeta aqui)
+         ======================================================== -->
+    <section class="produtos" id="products-section">
+      <h2 class="produtos__titulo-secao">
+        Nosso <span>Cardápio</span>
+      </h2>
+      <div id="products-grid">
+        <!-- Produtos injetados pelo script.js -->
+      </div>
+    </section>
+  </main>
+
+  <!-- ========================================================
+       CARRINHO LATERAL (Drawer)
+       ======================================================== -->
+  <div class="cart-overlay" id="cart-overlay"></div>
+
+  <aside class="cart-drawer" id="cart-drawer" aria-label="Carrinho de compras">
+    <div class="cart-drawer__header">
+      <h2 class="cart-drawer__titulo">🛒 Seu Pedido</h2>
+      <button class="cart-drawer__fechar" id="cart-close" aria-label="Fechar carrinho">✕</button>
+    </div>
+
+    <div class="cart-drawer__items" id="cart-items"></div>
+
+    <div class="cart-drawer__footer" id="cart-footer">
+      <div class="cart-drawer__total">
+        <span class="cart-drawer__total-label">Total</span>
+        <span class="cart-drawer__total-valor" id="cart-total">R$ 0,00</span>
+      </div>
+      <button class="cart-drawer__checkout" id="cart-checkout">
+        Finalizar Pedido
+      </button>
+    </div>
+  </aside>
+
+  <!-- Toast -->
+  <div class="toast" id="toast" aria-live="polite">
+    <span class="toast__emoji">✅</span>
+    <span id="toast-message">Item adicionado!</span>
+  </div>
+
+  <!-- ========================================================
+       FOOTER
+       ======================================================== -->
+  <footer class="footer" id="footer">
+    <p class="footer__texto">
+      Feito com <span class="footer__emoji">❤️</span> por
+      <strong>Doce Mel</strong> · 2026
+    </p>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+
+</html>
