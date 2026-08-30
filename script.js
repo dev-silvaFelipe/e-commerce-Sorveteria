@@ -60,7 +60,7 @@ async function initApp() {
   } catch (error) {
     console.error('Falha ao carregar produtos:', error);
     showEmptyState(
-      '😕',
+      '<i class="fa-solid fa-face-frown" aria-hidden="true"></i>',
       'Ops! Algo deu errado',
       'Não foi possível carregar os produtos. Tente recarregar a página.'
     );
@@ -86,7 +86,7 @@ function renderProducts(products) {
 
   if (products.length === 0) {
     showEmptyState(
-      '🔍',
+      '<i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>',
       'Nenhum produto encontrado',
       'Tente buscar por outro nome ou categoria.'
     );
@@ -140,7 +140,7 @@ function createProductCard(product, index) {
           data-product-id="${product.id}"
           aria-label="Adicionar ${product.nome} ao carrinho"
         >
-          🛒 Pedir
+          <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i> Pedir
         </button>
       </div>
     </div>
@@ -156,7 +156,7 @@ function createProductCard(product, index) {
     botao.classList.add('card__botao--added');
 
     setTimeout(() => {
-      botao.innerHTML = '🛒 Pedir';
+      botao.innerHTML = '<i class="fa-solid fa-cart-shopping" aria-hidden="true"></i> Pedir';
       botao.classList.remove('card__botao--added');
     }, 1200);
   });
@@ -181,7 +181,7 @@ function showSkeletons(count) {
 /**
  * Exibe estado vazio (sem resultados ou erro).
  *
- * @param {string} icon    - Emoji
+ * @param {string} icon    - Markup do ícone Font Awesome
  * @param {string} title   - Título
  * @param {string} message - Texto descritivo
  */
@@ -345,7 +345,7 @@ function updateCartUI() {
   if (cart.length === 0) {
     cartItems.innerHTML = `
       <div class="cart-drawer__vazio">
-        <div class="cart-drawer__vazio-icone">🛒</div>
+        <div class="cart-drawer__vazio-icone"><i class="fa-solid fa-cart-shopping" aria-hidden="true"></i></div>
         <p class="cart-drawer__vazio-texto">Seu carrinho está vazio.<br>Adicione delícias do nosso cardápio!</p>
       </div>
     `;
@@ -381,12 +381,12 @@ function renderCartItems() {
         <p class="cart-item__preco">R$ ${precoFormatado}</p>
       </div>
       <div class="cart-item__controles">
-        <button class="cart-item__qty-btn" data-action="decrease" data-id="${item.id}" aria-label="Diminuir quantidade">−</button>
+        <button class="cart-item__qty-btn" data-action="decrease" data-id="${item.id}" aria-label="Diminuir quantidade"><i class="fa-solid fa-minus" aria-hidden="true"></i></button>
         <span class="cart-item__qty">${item.quantidade}</span>
-        <button class="cart-item__qty-btn" data-action="increase" data-id="${item.id}" aria-label="Aumentar quantidade">+</button>
+        <button class="cart-item__qty-btn" data-action="increase" data-id="${item.id}" aria-label="Aumentar quantidade"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
       </div>
       <button class="cart-item__remover" data-action="remove" data-id="${item.id}" aria-label="Remover ${item.nome}">
-        🗑️
+        <i class="fa-solid fa-trash" aria-hidden="true"></i>
       </button>
     `;
 
@@ -519,7 +519,7 @@ cartCheckout.addEventListener('click', () => {
   if (cart.length === 0) return;
 
   const total = getCartTotal().toFixed(2).replace('.', ',');
-  showToast(`Pedido de R$ ${total} finalizado com sucesso! 🎉`);
+  showToast(`Pedido de R$ ${total} finalizado com sucesso!`);
 
   // Limpa o carrinho
   cart = [];
