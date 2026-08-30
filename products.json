@@ -1,51 +1,51 @@
 [
   {
     "id": 1,
-    "nome": "Casquinha Clássica",
-    "categoria": "Casquinha",
+    "nome": "Sorvete",
+    "categoria": "Sorvete",
     "preco": 8.50,
     "imagem": "./images/Anastasia.png",
-    "descricao": "Casquinha crocante com duas bolas de sorvete artesanal. Escolha entre nossos sabores irresistíveis de baunilha, chocolate ou morango."
+    "descricao": "Sorvete cremoso nos sabores tradicionais. Escolha entre nossos sabores irresistíveis."
   },
   {
     "id": 2,
-    "nome": "Cascão Trufado",
-    "categoria": "Cascão",
-    "preco": 14.90,
+    "nome": "Gelato",
+    "categoria": "Gelato",
+    "preco": 9.90,
     "imagem": "./images/Crepusculo.png",
-    "descricao": "Cascão premium coberto com chocolate belga e recheado com trufa cremosa. Uma experiência única de sabor e textura."
+    "descricao": "Gelato artesanal com sabor e textura premium e exclusivas, disponiveis limitadamente por temporada."
   },
   {
     "id": 3,
-    "nome": "Sundae Especial",
-    "categoria": "Sundae",
-    "preco": 19.90,
+    "nome": "Sundae Tropical",
+    "categoria": "Sundae Tropical",
+    "preco": 12.90,
     "imagem": "./images/SaladaDeFrutaComSorvete.png",
-    "descricao": "Sundae generoso com calda quente de chocolate, chantilly artesanal, castanhas caramelizadas e cereja no topo."
+    "descricao": "Sundae generoso com Salada de frutas, calda de sorvete, leite condensado e cereja no topo."
   },
   {
     "id": 4,
     "nome": "Milkshake Cremoso",
     "categoria": "Milkshake",
     "preco": 16.90,
-    "imagem": "./images/NinhoComPistache.png",
+    "imagem": "./images/Milkshake.jpeg",
     "descricao": "Milkshake ultra cremoso preparado na hora com sorvete premium e leite gelado. Disponível em diversos sabores."
   },
   {
     "id": 5,
-    "nome": "Pote Artesanal 1L",
+    "nome": "Pote Artesanal 2L",
     "categoria": "Pote",
     "preco": 32.00,
     "imagem": "./images/Seletos.png",
-    "descricao": "Pote de 1 litro do nosso sorvete artesanal feito com ingredientes selecionados. Perfeito para compartilhar em família."
+    "descricao": "Pote de 2 litros do nosso sorvete artesanal feito com ingredientes selecionados. Perfeito para compartilhar em família."
   },
   {
     "id": 6,
-    "nome": "Picolé Gourmet",
+    "nome": "Picolé Trufado",
     "categoria": "Picolé",
-    "preco": 7.90,
+    "preco": 3.90,
     "imagem": "./images/PicoleComCobertura.png",
-    "descricao": "Picolé artesanal com frutas frescas e cobertura de chocolate. Refrescante e saudável, ideal para os dias quentes."
+    "descricao": "Picolé trufado de chocolate, com cobertura de chocolate e castanhas para mais crocancia, ideal para os dias quentes."
   },
   {
     "id": 7,
@@ -53,14 +53,14 @@
     "categoria": "Açaí",
     "preco": 22.90,
     "imagem": "./images/Açai.png",
-    "descricao": "Tigela generosa de açaí puro da Amazônia com granola crocante, banana fatiada, morango e mel orgânico."
+    "descricao": "Tigela generosa de açaí puro."
   },
   {
     "id": 8,
     "nome": "Brownie com Sorvete",
     "categoria": "Sobremesa",
     "preco": 24.90,
-    "imagem": "./images/SanFierro.png",
-    "descricao": "Bolo quente de chocolate com centro derretido acompanhado de uma bola de sorvete de creme. Contraste perfeito de temperaturas."
+    "imagem": "./images/BrownieComSorvete.png",
+    "descricao": "Bolo quente de chocolate com calda de chocolate derretida acompanhado de uma bola de sorvete de Ninho. Contraste perfeito de temperaturas."
   }
 ]
