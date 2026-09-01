@@ -17,17 +17,32 @@ let allProducts = [];
 
 let cart = [];
 
+async function loadProducts() {
+  const productUrls = [
+    new URL('./products.json', window.location.href).toString(),
+    new URL('../products.json', window.location.href).toString(),
+    new URL('/products.json', window.location.origin).toString()
+  ];
+
+  for (const url of productUrls) {
+    try {
+      const response = await fetch(url);
+      if (response.ok) {
+        return await response.json();
+      }
+    } catch (error) {
+      console.warn(`Falha ao tentar carregar ${url}:`, error);
+    }
+  }
+
+  throw new Error('Não foi possível acessar o arquivo products.json.');
+}
+
 async function initApp() {
   showSkeletons(6);
 
   try {
-    const response = await fetch('./products.json');
-
-    if (!response.ok) {
-      throw new Error(`Erro HTTP: ${response.status}`);
-    }
-
-    allProducts = await response.json();
+    allProducts = await loadProducts();
     renderProducts(allProducts);
   } catch (error) {
     console.error('Falha ao carregar produtos:', error);
