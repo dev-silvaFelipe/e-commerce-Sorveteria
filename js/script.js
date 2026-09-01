@@ -1,18 +1,4 @@
-/**
- * ============================================================
- * DOCE MEL — Script Principal
- *
- * Responsabilidades:
- *   1. Buscar os dados dos produtos via fetch() (headless commerce)
- *   2. Renderizar os cards dinamicamente no DOM
- *   3. Filtrar produtos em tempo real pela barra de busca
- *   4. Gerenciar o carrinho de compras (adicionar, remover, alterar qtd)
- * ============================================================
- */
 
-// ============================================================
-// REFERÊNCIAS AO DOM
-// ============================================================
 const productsGrid = document.getElementById('products-grid');
 const searchInput  = document.getElementById('search-input');
 const cartBtn      = document.getElementById('cart-btn');
@@ -27,29 +13,15 @@ const cartCheckout = document.getElementById('cart-checkout');
 const toastEl      = document.getElementById('toast');
 const toastMsg     = document.getElementById('toast-message');
 
-// ============================================================
-// ESTADO GLOBAL
-// ============================================================
-
-/** Todos os produtos carregados do JSON */
 let allProducts = [];
 
-/**
- * Carrinho de compras.
- * Cada item: { id, nome, preco, imagem, quantidade }
- */
 let cart = [];
 
-// ============================================================
-// 1. INICIALIZAÇÃO — Carrega produtos e configura eventos
-// ============================================================
-
 async function initApp() {
-  // Exibe skeletons enquanto carrega
   showSkeletons(6);
 
   try {
-    const response = await fetch('products.json');
+    const response = await fetch('../products.json');
 
     if (!response.ok) {
       throw new Error(`Erro HTTP: ${response.status}`);
@@ -66,21 +38,10 @@ async function initApp() {
     );
   }
 
-  // Carrega carrinho salvo no localStorage (persistência entre sessões)
   loadCartFromStorage();
   updateCartUI();
 }
 
-// ============================================================
-// 2. RENDERIZAÇÃO DE PRODUTOS
-// ============================================================
-
-/**
- * Renderiza uma lista de produtos no grid.
- * Limpa o conteúdo anterior e cria novos cards.
- *
- * @param {Array} products - Array de objetos de produto
- */
 function renderProducts(products) {
   productsGrid.innerHTML = '';
 
@@ -103,13 +64,6 @@ function renderProducts(products) {
   productsGrid.appendChild(fragment);
 }
 
-/**
- * Cria o elemento HTML de um card de produto.
- *
- * @param {Object} product - Dados do produto
- * @param {number} index   - Índice para escalonar animação
- * @returns {HTMLElement}  - Elemento <article> do card
- */
 function createProductCard(product, index) {
   const card = document.createElement('article');
   card.className = 'card';
@@ -146,12 +100,10 @@ function createProductCard(product, index) {
     </div>
   `;
 
-  // Evento do botão "Pedir" — adiciona ao carrinho
   const botao = card.querySelector('.card__botao');
   botao.addEventListener('click', () => {
     addToCart(product);
 
-    // Feedback visual temporário no botão
     botao.textContent = '✓ Adicionado!';
     botao.classList.add('card__botao--added');
 
@@ -164,10 +116,6 @@ function createProductCard(product, index) {
   return card;
 }
 
-/**
- * Exibe skeletons de carregamento.
- * @param {number} count - Quantidade de skeletons
- */
 function showSkeletons(count) {
   productsGrid.innerHTML = '';
   for (let i = 0; i < count; i++) {
@@ -178,13 +126,6 @@ function showSkeletons(count) {
   }
 }
 
-/**
- * Exibe estado vazio (sem resultados ou erro).
- *
- * @param {string} icon    - Markup do ícone Font Awesome
- * @param {string} title   - Título
- * @param {string} message - Texto descritivo
- */
 function showEmptyState(icon, title, message) {
   productsGrid.innerHTML = `
     <div class="vazio">
@@ -195,16 +136,6 @@ function showEmptyState(icon, title, message) {
   `;
 }
 
-// ============================================================
-// 3. BUSCA / FILTRO EM TEMPO REAL
-// ============================================================
-
-/**
- * Filtra produtos pelo nome ou categoria.
- * Remove acentos para busca mais flexível.
- *
- * @param {string} query - Texto digitado
- */
 function filterProducts(query) {
   const normalizedQuery = normalizeText(query);
 
@@ -217,13 +148,6 @@ function filterProducts(query) {
   renderProducts(filtered);
 }
 
-/**
- * Normaliza texto: remove acentos e converte para minúsculas.
- * Ex: "Açaí" → "acai"
- *
- * @param {string} text
- * @returns {string}
- */
 function normalizeText(text) {
   return text
     .normalize('NFD')
@@ -232,16 +156,6 @@ function normalizeText(text) {
     .trim();
 }
 
-// ============================================================
-// 4. CARRINHO DE COMPRAS
-// ============================================================
-
-/**
- * Adiciona um produto ao carrinho.
- * Se o produto já existe, incrementa a quantidade.
- *
- * @param {Object} product - Dados do produto
- */
 function addToCart(product) {
   const existingItem = cart.find(item => item.id === product.id);
 
@@ -257,45 +171,28 @@ function addToCart(product) {
     });
   }
 
-  // Atualiza a interface e salva no localStorage
   updateCartUI();
   saveCartToStorage();
 
-  // Animação de "bounce" no botão do carrinho
   cartBtn.classList.remove('cart-btn--bounce');
-  // Força reflow para reiniciar a animação
   void cartBtn.offsetWidth;
   cartBtn.classList.add('cart-btn--bounce');
 
-  // Mostra notificação toast
   showToast(`${product.nome} adicionado ao carrinho!`);
 }
 
-/**
- * Remove um produto do carrinho pelo ID.
- *
- * @param {number} productId - ID do produto
- */
 function removeFromCart(productId) {
   cart = cart.filter(item => item.id !== productId);
   updateCartUI();
   saveCartToStorage();
 }
 
-/**
- * Altera a quantidade de um item no carrinho.
- * Se a quantidade chegar a 0, remove o item.
- *
- * @param {number} productId - ID do produto
- * @param {number} delta     - Valor a somar (+1 ou -1)
- */
 function changeQuantity(productId, delta) {
   const item = cart.find(i => i.id === productId);
   if (!item) return;
 
   item.quantidade += delta;
 
-  // Remove se a quantidade chegar a zero
   if (item.quantidade <= 0) {
     removeFromCart(productId);
     return;
@@ -305,35 +202,18 @@ function changeQuantity(productId, delta) {
   saveCartToStorage();
 }
 
-/**
- * Calcula o total do carrinho.
- * @returns {number} Soma dos preços × quantidades
- */
 function getCartTotal() {
   return cart.reduce((total, item) => total + (item.preco * item.quantidade), 0);
 }
 
-/**
- * Retorna a quantidade total de itens no carrinho.
- * @returns {number}
- */
 function getCartItemCount() {
   return cart.reduce((count, item) => count + item.quantidade, 0);
 }
 
-// ============================================================
-// 5. ATUALIZAÇÃO DA INTERFACE DO CARRINHO
-// ============================================================
-
-/**
- * Atualiza todos os elementos visuais do carrinho:
- * badge, lista de itens, total e visibilidade do footer.
- */
 function updateCartUI() {
   const itemCount = getCartItemCount();
   const total     = getCartTotal();
 
-  // --- Badge do botão ---
   cartBadge.textContent = itemCount;
   if (itemCount > 0) {
     cartBadge.classList.add('cart-btn__badge--visible');
@@ -341,7 +221,6 @@ function updateCartUI() {
     cartBadge.classList.remove('cart-btn__badge--visible');
   }
 
-  // --- Lista de itens ---
   if (cart.length === 0) {
     cartItems.innerHTML = `
       <div class="cart-drawer__vazio">
@@ -355,14 +234,9 @@ function updateCartUI() {
     renderCartItems();
   }
 
-  // --- Total ---
   cartTotal.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
 }
 
-/**
- * Renderiza a lista de itens dentro do drawer do carrinho.
- * Cada item exibe imagem, nome, preço, controles de quantidade e botão remover.
- */
 function renderCartItems() {
   cartItems.innerHTML = '';
   const fragment = document.createDocumentFragment();
@@ -390,7 +264,6 @@ function renderCartItems() {
       </button>
     `;
 
-    // Eventos dos botões de quantidade e remover
     div.querySelector('[data-action="decrease"]').addEventListener('click', () => {
       changeQuantity(item.id, -1);
     });
@@ -400,7 +273,6 @@ function renderCartItems() {
     });
 
     div.querySelector('[data-action="remove"]').addEventListener('click', () => {
-      // Animação de saída antes de remover
       div.classList.add('cart-item--removing');
       div.addEventListener('animationend', () => {
         removeFromCart(item.id);
@@ -413,35 +285,18 @@ function renderCartItems() {
   cartItems.appendChild(fragment);
 }
 
-// ============================================================
-// 6. ABRIR / FECHAR CARRINHO
-// ============================================================
-
-/**
- * Abre o drawer lateral do carrinho.
- */
 function openCart() {
   cartDrawer.classList.add('cart-drawer--open');
   cartOverlay.classList.add('cart-overlay--open');
   document.body.classList.add('cart-open');
 }
 
-/**
- * Fecha o drawer lateral do carrinho.
- */
 function closeCart() {
   cartDrawer.classList.remove('cart-drawer--open');
   cartOverlay.classList.remove('cart-overlay--open');
   document.body.classList.remove('cart-open');
 }
 
-// ============================================================
-// 7. PERSISTÊNCIA — localStorage
-// ============================================================
-
-/**
- * Salva o carrinho no localStorage para persistir entre sessões.
- */
 function saveCartToStorage() {
   try {
     localStorage.setItem('docemel_cart', JSON.stringify(cart));
@@ -450,9 +305,6 @@ function saveCartToStorage() {
   }
 }
 
-/**
- * Carrega o carrinho salvo do localStorage.
- */
 function loadCartFromStorage() {
   try {
     const saved = localStorage.getItem('docemel_cart');
@@ -465,20 +317,9 @@ function loadCartFromStorage() {
   }
 }
 
-// ============================================================
-// 8. TOAST — Notificação temporária
-// ============================================================
-
-/** Timer do toast (para limpar se outro toast for disparado) */
 let toastTimer = null;
 
-/**
- * Exibe uma notificação toast na parte inferior da tela.
- *
- * @param {string} message - Texto a ser exibido
- */
 function showToast(message) {
-  // Limpa toast anterior se existir
   if (toastTimer) clearTimeout(toastTimer);
 
   toastMsg.textContent = message;
@@ -489,48 +330,33 @@ function showToast(message) {
   }, 2500);
 }
 
-// ============================================================
-// 9. EVENT LISTENERS
-// ============================================================
-
-// Busca em tempo real
 searchInput.addEventListener('input', (event) => {
   filterProducts(event.target.value);
 });
 
-// Abrir carrinho
 cartBtn.addEventListener('click', openCart);
 
-// Fechar carrinho (botão X)
 cartClose.addEventListener('click', closeCart);
 
-// Fechar carrinho (clique no overlay)
 cartOverlay.addEventListener('click', closeCart);
 
-// Fechar carrinho (tecla Escape)
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape') {
     closeCart();
   }
 });
 
-// Botão "Finalizar Pedido"
 cartCheckout.addEventListener('click', () => {
   if (cart.length === 0) return;
 
   const total = getCartTotal().toFixed(2).replace('.', ',');
   showToast(`Pedido de R$ ${total} finalizado com sucesso!`);
 
-  // Limpa o carrinho
   cart = [];
   updateCartUI();
   saveCartToStorage();
 
-  // Fecha o drawer após um breve delay
   setTimeout(closeCart, 800);
 });
 
-// ============================================================
-// 10. INICIALIZAÇÃO
-// ============================================================
 document.addEventListener('DOMContentLoaded', initApp);
